@@ -23,6 +23,13 @@ class WelcomeVC: UIViewController {
     
     @objc private func didTapSignIn() {
         print(#function)
+        AuthManager.getRequestToken { (success) in
+            if success {
+                print(AuthManager.Constants.api_key)
+            } else {
+                print("WelcomeVC: Error Trying to get Token")
+            }
+        }
     }
     
     
