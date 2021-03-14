@@ -27,12 +27,18 @@ class AuthManager {
         static let apiKeyParameter = "?api_key=\(Constants.api_key)"
         
         case getRequestToken
+        case createSession
+        case webAuth
         
         
         var stringUrl: String {
             switch self {
             case .getRequestToken:
                 return EndPoints.baseURL + "/authentication/token/new" + EndPoints.apiKeyParameter
+            case .createSession:
+                return EndPoints.baseURL + "/authentication/session/new" + EndPoints.apiKeyParameter
+            case .webAuth:
+                return "https://www.themoviedb.org/authenticate/\(Constants.requestToken)?redirect_to=themoviedbclient:authenticate"
             }
         }
         
@@ -43,7 +49,7 @@ class AuthManager {
     
     
     class func getRequestToken(completion: @escaping (Bool) -> Void) {
-        
+        print(#function)
         let task = URLSession.shared.dataTask(with: EndPoints.getRequestToken.url) { (data, response, error) in
             // check response -> different json structure
             guard let data = data, error == nil else {
@@ -54,7 +60,6 @@ class AuthManager {
             
             do {
                 let response = try JSONDecoder().decode(TokenResponse.self, from: data)
-                print(response)
                 //TODO: - cache the token user defaults
                 Constants.requestToken = response.requestToken
                 completion(true)
@@ -64,5 +69,36 @@ class AuthManager {
             }
         }
         task.resume()
+    }
+    
+    
+    class func createSession(completion: @escaping (Bool) -> Void) {
+        print(#function)
+        
+        var request = URLRequest(url: EndPoints.createSession.url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONEncoder().encode(SessionRequest(requestToken: Constants.requestToken))
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("error creating session")
+                completion(false)
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(SessionResponse.self, from: data)
+                print(response)
+                Constants.sessionId = response.sessionId
+                completion(true)
+            } catch {
+                print("Error parsing Session response: \(error.localizedDescription)")
+                completion(false)
+            }
+            
+        }
+        task.resume()
+        
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 class WelcomeVC: UIViewController {
     
-    let signInButton = UIButton()
+    let signInViaWebButton = UIButton()
     
     
     override func viewDidLoad() {
@@ -25,7 +25,11 @@ class WelcomeVC: UIViewController {
         print(#function)
         AuthManager.getRequestToken { (success) in
             if success {
-                print(AuthManager.Constants.api_key)
+                print("Token: \(AuthManager.Constants.requestToken)")
+                DispatchQueue.main.async {
+                    print("going to call open function")
+                    UIApplication.shared.open(AuthManager.EndPoints.webAuth.url, options: [:], completionHandler: nil)
+                }
             } else {
                 print("WelcomeVC: Error Trying to get Token")
             }
@@ -34,20 +38,20 @@ class WelcomeVC: UIViewController {
     
     
     private func configureSignInButton() {
-        view.addSubview(signInButton)
+        view.addSubview(signInViaWebButton)
         
-        signInButton.translatesAutoresizingMaskIntoConstraints = false
-        signInButton.backgroundColor = .white
-        signInButton.setTitle("Sign in to TMDB", for: .normal)
-        signInButton.setTitleColor(.black, for: .normal)
-        signInButton.layer.cornerRadius = 10
-        signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        signInViaWebButton.translatesAutoresizingMaskIntoConstraints = false
+        signInViaWebButton.backgroundColor = .white
+        signInViaWebButton.setTitle("Sign in via Website", for: .normal)
+        signInViaWebButton.setTitleColor(.black, for: .normal)
+        signInViaWebButton.layer.cornerRadius = 10
+        signInViaWebButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            signInButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            signInButton.heightAnchor.constraint(equalToConstant: 50)
+            signInViaWebButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            signInViaWebButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            signInViaWebButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            signInViaWebButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
