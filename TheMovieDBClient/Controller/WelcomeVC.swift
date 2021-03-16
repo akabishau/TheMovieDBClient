@@ -9,15 +9,17 @@ import UIKit
 
 class WelcomeVC: UIViewController {
     
-    let signInViaWebButton = UIButton()
+    let usernameTextField = MDBTextField(placeholder: "Username")
+    let passwordTextField = MDBTextField(placeholder: "Password")
+    let loginButton = MDBButton(title: "Login")
+    let loginViaWebButton = MDBButton(title: "Login via Website")
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBlue
-        configureSignInButton()
-    
+        configureUI()
     }
     
     
@@ -37,21 +39,36 @@ class WelcomeVC: UIViewController {
     }
     
     
-    private func configureSignInButton() {
-        view.addSubview(signInViaWebButton)
+    private func configureUI() {
         
-        signInViaWebButton.translatesAutoresizingMaskIntoConstraints = false
-        signInViaWebButton.backgroundColor = .white
-        signInViaWebButton.setTitle("Sign in via Website", for: .normal)
-        signInViaWebButton.setTitleColor(.black, for: .normal)
-        signInViaWebButton.layer.cornerRadius = 10
-        signInViaWebButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        view.addSubview(usernameTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(loginButton)
+        view.addSubview(loginViaWebButton)
+        
+        passwordTextField.isSecureTextEntry = true
         
         NSLayoutConstraint.activate([
-            signInViaWebButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            signInViaWebButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            signInViaWebButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            signInViaWebButton.heightAnchor.constraint(equalToConstant: 50)
+            usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            usernameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            usernameTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 15),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            
+            loginViaWebButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            loginViaWebButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            loginViaWebButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            loginViaWebButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
