@@ -29,6 +29,7 @@ class AuthManager {
         case getRequestToken
         case createSession
         case webAuth
+        case login
         
         
         var stringUrl: String {
@@ -39,6 +40,8 @@ class AuthManager {
                 return EndPoints.baseURL + "/authentication/session/new" + EndPoints.apiKeyParameter
             case .webAuth:
                 return "https://www.themoviedb.org/authenticate/\(Constants.requestToken)?redirect_to=themoviedbclient:authenticate"
+            case .login:
+                return "https://api.themoviedb.org/3/authentication/token/validate_with_login" + EndPoints.apiKeyParameter
             }
         }
         
@@ -100,5 +103,34 @@ class AuthManager {
         }
         task.resume()
         
+    }
+    
+    
+    class func login(username: String, password: String, completion: @escaping (Bool) -> Void) {
+        print(#function)
+        var request = URLRequest(url: EndPoints.login.url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONEncoder().encode(LoginRequest(username: username, password: password, requestToken: Constants.requestToken))
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("login datatask error: \(error!.localizedDescription)")
+                completion(false)
+                return
+            }
+            print(data)
+            do {
+                let response = try JSONDecoder().decode(LoginResponse.self, from: data)
+                print(response)
+                // capture expiration - handle later
+                Constants.requestToken = response.requestToken
+                completion(true)
+            } catch {
+                print("Error parsing Login response: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+        task.resume()
     }
 }

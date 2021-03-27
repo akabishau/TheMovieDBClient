@@ -18,6 +18,8 @@
 		5B96C1E025FE8D400093A266 /* SessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1DF25FE8D400093A266 /* SessionResponse.swift */; };
 		5B96C1E325FE8FF60093A266 /* MDBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1E225FE8FF50093A266 /* MDBTextField.swift */; };
 		5B96C1E62600311F0093A266 /* MDBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1E52600311F0093A266 /* MDBButton.swift */; };
+		5B96C1E9260528350093A266 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1E8260528350093A266 /* LoginRequest.swift */; };
+		5B96C1EC260528810093A266 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1EB260528810093A266 /* LoginResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		5B96C1DF25FE8D400093A266 /* SessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionResponse.swift; sourceTree = "<group>"; };
 		5B96C1E225FE8FF50093A266 /* MDBTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBTextField.swift; sourceTree = "<group>"; };
 		5B96C1E52600311F0093A266 /* MDBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBButton.swift; sourceTree = "<group>"; };
+		5B96C1E8260528350093A266 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		5B96C1EB260528810093A266 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 				5B3316B825FA8653007EEA89 /* TokenResponse.swift */,
 				5B96C1DC25FE8D250093A266 /* SessionRequest.swift */,
 				5B96C1DF25FE8D400093A266 /* SessionResponse.swift */,
+				5B96C1E8260528350093A266 /* LoginRequest.swift */,
+				5B96C1EB260528810093A266 /* LoginResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -194,11 +200,13 @@
 				5B33169825F6CCAF007EEA89 /* WelcomeVC.swift in Sources */,
 				5B96C1E325FE8FF60093A266 /* MDBTextField.swift in Sources */,
 				5B3316B625F9C623007EEA89 /* AuthManager.swift in Sources */,
+				5B96C1E9260528350093A266 /* LoginRequest.swift in Sources */,
 				5B96C1DD25FE8D250093A266 /* SessionRequest.swift in Sources */,
 				5B96C1E025FE8D400093A266 /* SessionResponse.swift in Sources */,
 				5B33169425F6CCAF007EEA89 /* AppDelegate.swift in Sources */,
 				5B96C1E62600311F0093A266 /* MDBButton.swift in Sources */,
 				5B33169625F6CCAF007EEA89 /* SceneDelegate.swift in Sources */,
+				5B96C1EC260528810093A266 /* LoginResponse.swift in Sources */,
 				5B3316B925FA8653007EEA89 /* TokenResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

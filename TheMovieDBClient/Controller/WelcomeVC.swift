@@ -20,10 +20,32 @@ class WelcomeVC: UIViewController {
         
         view.backgroundColor = .systemBlue
         configureUI()
+        
+        loginButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
+        loginViaWebButton.addTarget(self, action: #selector(didTapLoginViaWeb), for: .touchUpInside)
     }
     
     
-    @objc private func didTapSignIn() {
+    @objc private func didTapLogin() {
+        print(#function)
+        AuthManager.getRequestToken { success in
+            if success {
+                print("Request Token: \(AuthManager.Constants.requestToken)")
+                //TODO: - Get user input and handle errors
+                AuthManager.login(username: "kabishauTest", password: "kabishauTest") { success in
+                    if success {
+                        print("Request Token Confirmation: \(AuthManager.Constants.requestToken)")
+                        AuthManager.createSession { success in
+                            print("Session ID: \(AuthManager.Constants.sessionId)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    @objc private func didTapLoginViaWeb() {
         print(#function)
         AuthManager.getRequestToken { (success) in
             if success {
@@ -46,7 +68,7 @@ class WelcomeVC: UIViewController {
         view.addSubview(loginButton)
         view.addSubview(loginViaWebButton)
         
-        passwordTextField.isSecureTextEntry = true
+        //passwordTextField.isSecureTextEntry = true
         
         NSLayoutConstraint.activate([
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
