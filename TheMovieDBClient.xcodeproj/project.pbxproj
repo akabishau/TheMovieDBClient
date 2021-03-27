@@ -20,6 +20,8 @@
 		5B96C1E62600311F0093A266 /* MDBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1E52600311F0093A266 /* MDBButton.swift */; };
 		5B96C1E9260528350093A266 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1E8260528350093A266 /* LoginRequest.swift */; };
 		5B96C1EC260528810093A266 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1EB260528810093A266 /* LoginResponse.swift */; };
+		5B96C1EF260EEE070093A266 /* MovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1EE260EEE070093A266 /* MovieResults.swift */; };
+		5B96C1F2260EEE150093A266 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1F1260EEE150093A266 /* Movie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		5B96C1E52600311F0093A266 /* MDBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBButton.swift; sourceTree = "<group>"; };
 		5B96C1E8260528350093A266 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		5B96C1EB260528810093A266 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		5B96C1EE260EEE070093A266 /* MovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResults.swift; sourceTree = "<group>"; };
+		5B96C1F1260EEE150093A266 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				5B96C1DF25FE8D400093A266 /* SessionResponse.swift */,
 				5B96C1E8260528350093A266 /* LoginRequest.swift */,
 				5B96C1EB260528810093A266 /* LoginResponse.swift */,
+				5B96C1EE260EEE070093A266 /* MovieResults.swift */,
+				5B96C1F1260EEE150093A266 /* Movie.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,6 +210,8 @@
 				5B96C1DD25FE8D250093A266 /* SessionRequest.swift in Sources */,
 				5B96C1E025FE8D400093A266 /* SessionResponse.swift in Sources */,
 				5B33169425F6CCAF007EEA89 /* AppDelegate.swift in Sources */,
+				5B96C1EF260EEE070093A266 /* MovieResults.swift in Sources */,
+				5B96C1F2260EEE150093A266 /* Movie.swift in Sources */,
 				5B96C1E62600311F0093A266 /* MDBButton.swift in Sources */,
 				5B33169625F6CCAF007EEA89 /* SceneDelegate.swift in Sources */,
 				5B96C1EC260528810093A266 /* LoginResponse.swift in Sources */,

@@ -15,6 +15,7 @@ class AuthManager {
     
     struct Constants {
         static let api_key = "64220f6c5aefcbcea6bded475e131e43"
+        static let accountId = 1
         
         static var requestToken = ""
         static var sessionId = ""
@@ -25,11 +26,13 @@ class AuthManager {
     enum EndPoints{
         static let baseURL = "https://api.themoviedb.org/3"
         static let apiKeyParameter = "?api_key=\(Constants.api_key)"
+        static let sessionIdParameter = "&session_id=\(Constants.sessionId)"
         
         case getRequestToken
         case createSession
         case webAuth
         case login
+        case getFavorites
         
         
         var stringUrl: String {
@@ -42,6 +45,8 @@ class AuthManager {
                 return "https://www.themoviedb.org/authenticate/\(Constants.requestToken)?redirect_to=themoviedbclient:authenticate"
             case .login:
                 return "https://api.themoviedb.org/3/authentication/token/validate_with_login" + EndPoints.apiKeyParameter
+            case .getFavorites:
+                return "\(EndPoints.baseURL)/account/\(Constants.accountId)/favorite/movies" + EndPoints.apiKeyParameter + EndPoints.sessionIdParameter //also available pagination + sort by created date
             }
         }
         
@@ -129,6 +134,29 @@ class AuthManager {
             } catch {
                 print("Error parsing Login response: \(error.localizedDescription)")
                 completion(false)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    class func getFavoritesMovies(completion: @escaping ([Movie]?) -> Void) {
+        print(#function)
+        
+        let task = URLSession.shared.dataTask(with: EndPoints.getFavorites.url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Error requesting Favorites: \(error?.localizedDescription ?? "")")
+                completion(nil)
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(MovieResults.self, from: data)
+                let movies = response.results
+                completion(movies)
+            } catch {
+                print("Error parsing Favorite Movies response: \(error.localizedDescription)")
+                completion(nil)
             }
         }
         task.resume()

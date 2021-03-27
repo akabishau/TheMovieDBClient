@@ -37,6 +37,15 @@ class WelcomeVC: UIViewController {
                         print("Request Token Confirmation: \(AuthManager.Constants.requestToken)")
                         AuthManager.createSession { success in
                             print("Session ID: \(AuthManager.Constants.sessionId)")
+                            AuthManager.getFavoritesMovies { favorites in
+                                guard let favorites = favorites else {
+                                    print("User has no favorites")
+                                    return
+                                }
+                                for movie in favorites {
+                                    print(movie.title)
+                                }
+                            }
                         }
                     }
                 }
