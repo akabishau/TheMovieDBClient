@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WelcomeVC: UIViewController {
+class AuthVC: UIViewController {
     
     let usernameTextField = MDBTextField(placeholder: "Username")
     let passwordTextField = MDBTextField(placeholder: "Password")
