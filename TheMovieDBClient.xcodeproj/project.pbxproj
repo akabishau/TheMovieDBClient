@@ -22,6 +22,10 @@
 		5B96C1EC260528810093A266 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1EB260528810093A266 /* LoginResponse.swift */; };
 		5B96C1EF260EEE070093A266 /* MovieResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1EE260EEE070093A266 /* MovieResults.swift */; };
 		5B96C1F2260EEE150093A266 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1F1260EEE150093A266 /* Movie.swift */; };
+		5B96C1F6261023420093A266 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1F5261023420093A266 /* TabBarVC.swift */; };
+		5B96C1F92610239D0093A266 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1F82610239D0093A266 /* HomeVC.swift */; };
+		5B96C1FC261023CA0093A266 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1FB261023CA0093A266 /* FavoritesListVC.swift */; };
+		5B96C1FF261023DD0093A266 /* WatchListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1FE261023DD0093A266 /* WatchListVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		5B96C1EB260528810093A266 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		5B96C1EE260EEE070093A266 /* MovieResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResults.swift; sourceTree = "<group>"; };
 		5B96C1F1260EEE150093A266 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		5B96C1F5261023420093A266 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		5B96C1F82610239D0093A266 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		5B96C1FB261023CA0093A266 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
+		5B96C1FE261023DD0093A266 /* WatchListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				5B33169725F6CCAF007EEA89 /* AuthVC.swift */,
+				5B96C201261023E50093A266 /* Core */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -132,6 +141,17 @@
 				5B3316B525F9C623007EEA89 /* AuthManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		5B96C201261023E50093A266 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5B96C1F5261023420093A266 /* TabBarVC.swift */,
+				5B96C1F82610239D0093A266 /* HomeVC.swift */,
+				5B96C1FB261023CA0093A266 /* FavoritesListVC.swift */,
+				5B96C1FE261023DD0093A266 /* WatchListVC.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,13 +223,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B96C1F6261023420093A266 /* TabBarVC.swift in Sources */,
 				5B33169825F6CCAF007EEA89 /* AuthVC.swift in Sources */,
 				5B96C1E325FE8FF60093A266 /* MDBTextField.swift in Sources */,
 				5B3316B625F9C623007EEA89 /* AuthManager.swift in Sources */,
 				5B96C1E9260528350093A266 /* LoginRequest.swift in Sources */,
 				5B96C1DD25FE8D250093A266 /* SessionRequest.swift in Sources */,
+				5B96C1F92610239D0093A266 /* HomeVC.swift in Sources */,
 				5B96C1E025FE8D400093A266 /* SessionResponse.swift in Sources */,
+				5B96C1FC261023CA0093A266 /* FavoritesListVC.swift in Sources */,
 				5B33169425F6CCAF007EEA89 /* AppDelegate.swift in Sources */,
+				5B96C1FF261023DD0093A266 /* WatchListVC.swift in Sources */,
 				5B96C1EF260EEE070093A266 /* MovieResults.swift in Sources */,
 				5B96C1F2260EEE150093A266 /* Movie.swift in Sources */,
 				5B96C1E62600311F0093A266 /* MDBButton.swift in Sources */,
