@@ -28,16 +28,16 @@ class AuthVC: UIViewController {
     
     @objc private func didTapLogin() {
         print(#function)
-        AuthManager.getRequestToken { success in
+        AuthManager.shared.getRequestToken { success in
             if success {
                 print("Request Token: \(AuthManager.Constants.requestToken)")
                 //TODO: - Get user input and handle errors
-                AuthManager.login(username: "kabishauTest", password: "kabishauTest") { success in
+                AuthManager.shared.login(username: "kabishauTest", password: "kabishauTest") { success in
                     if success {
                         print("Request Token Confirmation: \(AuthManager.Constants.requestToken)")
-                        AuthManager.createSession { success in
+                        AuthManager.shared.createSession { success in
                             print("Session ID: \(AuthManager.Constants.sessionId)")
-                            AuthManager.getFavoritesMovies { favorites in
+                            AuthManager.shared.getFavoritesMovies { favorites in
                                 guard let favorites = favorites else {
                                     print("User has no favorites")
                                     return
@@ -56,7 +56,7 @@ class AuthVC: UIViewController {
     
     @objc private func didTapLoginViaWeb() {
         print(#function)
-        AuthManager.getRequestToken { (success) in
+        AuthManager.shared.getRequestToken { (success) in
             if success {
                 print("Token: \(AuthManager.Constants.requestToken)")
                 DispatchQueue.main.async {

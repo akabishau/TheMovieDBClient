@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // get instance of root view controller
             // let welcomeVC = window?.rootViewController as! WelcomeVC
             // call create session method with the completion handler for the response (located on welcome vc)
-            AuthManager.createSession { (success) in
+            AuthManager.shared.createSession { (success) in
                 if success {
                     print("SessionId: \(AuthManager.Constants.sessionId)")
                 } else {

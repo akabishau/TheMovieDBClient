@@ -56,7 +56,7 @@ class AuthManager {
     }
     
     
-    class func getRequestToken(completion: @escaping (Bool) -> Void) {
+    func getRequestToken(completion: @escaping (Bool) -> Void) {
         print(#function)
         let task = URLSession.shared.dataTask(with: EndPoints.getRequestToken.url) { (data, response, error) in
             // check response -> different json structure
@@ -80,7 +80,7 @@ class AuthManager {
     }
     
     
-    class func createSession(completion: @escaping (Bool) -> Void) {
+    func createSession(completion: @escaping (Bool) -> Void) {
         print(#function)
         
         var request = URLRequest(url: EndPoints.createSession.url)
@@ -111,7 +111,7 @@ class AuthManager {
     }
     
     
-    class func login(username: String, password: String, completion: @escaping (Bool) -> Void) {
+    func login(username: String, password: String, completion: @escaping (Bool) -> Void) {
         print(#function)
         var request = URLRequest(url: EndPoints.login.url)
         request.httpMethod = "POST"
@@ -140,7 +140,7 @@ class AuthManager {
     }
     
     
-    class func getFavoritesMovies(completion: @escaping ([Movie]?) -> Void) {
+    func getFavoritesMovies(completion: @escaping ([Movie]?) -> Void) {
         print(#function)
         
         let task = URLSession.shared.dataTask(with: EndPoints.getFavorites.url) { data, response, error in
