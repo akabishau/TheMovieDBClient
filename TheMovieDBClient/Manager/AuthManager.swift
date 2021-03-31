@@ -16,17 +16,13 @@ class AuthManager {
     struct Constants {
         static let api_key = "64220f6c5aefcbcea6bded475e131e43"
         static let accountId = 1
-        
-        static var requestToken = ""
-        static var sessionId = ""
-        
     }
     
     
     enum EndPoints{
         static let baseURL = "https://api.themoviedb.org/3"
         static let apiKeyParameter = "?api_key=\(Constants.api_key)"
-        static let sessionIdParameter = "&session_id=\(Constants.sessionId)"
+        static let sessionIdParameter = "&session_id=\(AuthManager.shared.sessionId!)"
         
         case getRequestToken
         case createSession
@@ -42,7 +38,7 @@ class AuthManager {
             case .createSession:
                 return EndPoints.baseURL + "/authentication/session/new" + EndPoints.apiKeyParameter
             case .webAuth:
-                return "https://www.themoviedb.org/authenticate/\(Constants.requestToken)?redirect_to=themoviedbclient:authenticate"
+                return "https://www.themoviedb.org/authenticate/\(AuthManager.shared.accessToken!)?redirect_to=themoviedbclient:authenticate"
             case .login:
                 return "https://api.themoviedb.org/3/authentication/token/validate_with_login" + EndPoints.apiKeyParameter
             case .getFavorites:
@@ -56,10 +52,38 @@ class AuthManager {
     }
     
     
+    var isSignedIn: Bool {
+        return sessionId != nil
+    }
+    
+    var accessToken: String? {
+        return UserDefaults.standard.string(forKey: "access_token")
+    }
+    
+    //TODO: - Review the documentation about expiration date and how to review it before it expires
+    private var tokenExpirationDate: Date? {
+        return UserDefaults.standard.object(forKey: "expiration_date") as? Date
+    }
+    
+    var sessionId: String? {
+        return UserDefaults.standard.string(forKey: "session_id")
+    }
+    
+    
+    private func cacheToken(from response: TokenResponse) {
+        UserDefaults.standard.setValue(response.requestToken, forKey: "access_token")
+        UserDefaults.standard.setValue(response.expiresAt, forKey: "expiration_date")
+    }
+    
+    private func cacheSessionId(from response: SessionResponse) {
+        UserDefaults.standard.setValue(response.sessionId, forKey: "session_id")
+    }
+    
+    
     func getRequestToken(completion: @escaping (Bool) -> Void) {
         print(#function)
         let task = URLSession.shared.dataTask(with: EndPoints.getRequestToken.url) { (data, response, error) in
-            // check response -> different json structure
+            //TODO: -  check response -> different json structure
             guard let data = data, error == nil else {
                 completion(false)
                 print("error receiving token")
@@ -68,8 +92,8 @@ class AuthManager {
             
             do {
                 let response = try JSONDecoder().decode(TokenResponse.self, from: data)
-                //TODO: - cache the token user defaults
-                Constants.requestToken = response.requestToken
+                print(response)
+                self.cacheToken(from: response)
                 completion(true)
             } catch {
                 print("Error parsing Token: \(error.localizedDescription)")
@@ -86,7 +110,12 @@ class AuthManager {
         var request = URLRequest(url: EndPoints.createSession.url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(SessionRequest(requestToken: Constants.requestToken))
+        guard let accessToken = accessToken else {
+            print("no access token available")
+            completion(false)
+            return
+        }
+        request.httpBody = try! JSONEncoder().encode(SessionRequest(requestToken: accessToken))
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -98,7 +127,7 @@ class AuthManager {
             do {
                 let response = try JSONDecoder().decode(SessionResponse.self, from: data)
                 print(response)
-                Constants.sessionId = response.sessionId
+                self.cacheSessionId(from: response)
                 completion(true)
             } catch {
                 print("Error parsing Session response: \(error.localizedDescription)")
@@ -116,7 +145,14 @@ class AuthManager {
         var request = URLRequest(url: EndPoints.login.url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try! JSONEncoder().encode(LoginRequest(username: username, password: password, requestToken: Constants.requestToken))
+        
+        guard let accessToken = accessToken else {
+            print("no access token available")
+            completion(false)
+            return
+        }
+        
+        request.httpBody = try! JSONEncoder().encode(LoginRequest(username: username, password: password, requestToken: accessToken))
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -126,10 +162,9 @@ class AuthManager {
             }
             print(data)
             do {
-                let response = try JSONDecoder().decode(LoginResponse.self, from: data)
+                let response = try JSONDecoder().decode(TokenResponse.self, from: data)
                 print(response)
-                // capture expiration - handle later
-                Constants.requestToken = response.requestToken
+                self.cacheToken(from: response)
                 completion(true)
             } catch {
                 print("Error parsing Login response: \(error.localizedDescription)")

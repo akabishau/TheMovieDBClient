@@ -13,10 +13,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+        print(#function)
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = AuthVC()
+        
+        if AuthManager.shared.isSignedIn {
+            window.rootViewController = TabBarVC()
+        } else {
+            window.rootViewController = AuthVC()
+        }
+        
         window.makeKeyAndVisible()
         self.window = window
     }
@@ -43,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // call create session method with the completion handler for the response (located on welcome vc)
             AuthManager.shared.createSession { (success) in
                 if success {
-                    print("SessionId: \(AuthManager.Constants.sessionId)")
+                    print("SessionId: \(AuthManager.shared.sessionId!)")
                 } else {
                     print("WelcomeVC: can't create session id")
                 }

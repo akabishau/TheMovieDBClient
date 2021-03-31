@@ -30,20 +30,32 @@ class AuthVC: UIViewController {
         print(#function)
         AuthManager.shared.getRequestToken { success in
             if success {
-                print("Request Token: \(AuthManager.Constants.requestToken)")
+                //print("Request Token: \(AuthManager.Constants.requestToken)")
+                print("Request Token: \(AuthManager.shared.accessToken!)")
                 //TODO: - Get user input and handle errors
                 AuthManager.shared.login(username: "kabishauTest", password: "kabishauTest") { success in
                     if success {
-                        print("Request Token Confirmation: \(AuthManager.Constants.requestToken)")
+                        //print("Request Token Confirmation: \(AuthManager.Constants.requestToken)")
+                        print("Request Token Confirmation: \(AuthManager.shared.accessToken!)")
                         AuthManager.shared.createSession { success in
-                            print("Session ID: \(AuthManager.Constants.sessionId)")
-                            AuthManager.shared.getFavoritesMovies { favorites in
-                                guard let favorites = favorites else {
-                                    print("User has no favorites")
-                                    return
+                            //print("Session ID: \(AuthManager.Constants.sessionId)")
+                            print("Session ID: \(AuthManager.shared.sessionId!)")
+                            
+                            if success {
+                                DispatchQueue.main.async {
+                                    let appTabBarVC = TabBarVC()
+                                    appTabBarVC.modalPresentationStyle = .fullScreen
+                                    self.present(appTabBarVC, animated: true, completion: nil)
                                 }
-                                for movie in favorites {
-                                    print(movie.title)
+                                
+                                AuthManager.shared.getFavoritesMovies { favorites in
+                                    guard let favorites = favorites else {
+                                        print("User has no favorites")
+                                        return
+                                    }
+                                    for movie in favorites {
+                                        print(movie.title)
+                                    }
                                 }
                             }
                         }
@@ -58,7 +70,8 @@ class AuthVC: UIViewController {
         print(#function)
         AuthManager.shared.getRequestToken { (success) in
             if success {
-                print("Token: \(AuthManager.Constants.requestToken)")
+                //print("Token: \(AuthManager.Constants.requestToken)")
+                print("Token: \(AuthManager.shared.accessToken!)")
                 DispatchQueue.main.async {
                     print("going to call open function")
                     UIApplication.shared.open(AuthManager.EndPoints.webAuth.url, options: [:], completionHandler: nil)
