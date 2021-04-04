@@ -13,36 +13,30 @@ class AuthManager {
     private init() { }
     
     
-    struct Constants {
-        static let api_key = "64220f6c5aefcbcea6bded475e131e43"
-        static let accountId = 1
-    }
+    static let api_key = "64220f6c5aefcbcea6bded475e131e43"
     
     
-    enum EndPoints{
+    enum EndPoint {
         static let baseURL = "https://api.themoviedb.org/3"
-        static let apiKeyParameter = "?api_key=\(Constants.api_key)"
+        static let apiKeyParameter = "?api_key=\(AuthManager.api_key)"
         static let sessionIdParameter = "&session_id=\(AuthManager.shared.sessionId!)"
         
         case getRequestToken
         case createSession
         case webAuth
         case login
-        case getFavorites
         
         
         var stringUrl: String {
             switch self {
             case .getRequestToken:
-                return EndPoints.baseURL + "/authentication/token/new" + EndPoints.apiKeyParameter
+                return EndPoint.baseURL + "/authentication/token/new" + EndPoint.apiKeyParameter
             case .createSession:
-                return EndPoints.baseURL + "/authentication/session/new" + EndPoints.apiKeyParameter
+                return EndPoint.baseURL + "/authentication/session/new" + EndPoint.apiKeyParameter
             case .webAuth:
                 return "https://www.themoviedb.org/authenticate/\(AuthManager.shared.accessToken!)?redirect_to=themoviedbclient:authenticate"
             case .login:
-                return "https://api.themoviedb.org/3/authentication/token/validate_with_login" + EndPoints.apiKeyParameter
-            case .getFavorites:
-                return "\(EndPoints.baseURL)/account/\(Constants.accountId)/favorite/movies" + EndPoints.apiKeyParameter + EndPoints.sessionIdParameter //also available pagination + sort by created date
+                return "https://api.themoviedb.org/3/authentication/token/validate_with_login" + EndPoint.apiKeyParameter
             }
         }
         
@@ -61,6 +55,7 @@ class AuthManager {
     }
     
     //TODO: - Review the documentation about expiration date and how to review it before it expires
+    //TODO: - Set to nil in case of the user is logging out
     private var tokenExpirationDate: Date? {
         return UserDefaults.standard.object(forKey: "expiration_date") as? Date
     }
@@ -82,7 +77,7 @@ class AuthManager {
     
     func getRequestToken(completion: @escaping (Bool) -> Void) {
         print(#function)
-        let task = URLSession.shared.dataTask(with: EndPoints.getRequestToken.url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: EndPoint.getRequestToken.url) { (data, response, error) in
             //TODO: -  check response -> different json structure
             guard let data = data, error == nil else {
                 completion(false)
@@ -107,7 +102,7 @@ class AuthManager {
     func createSession(completion: @escaping (Bool) -> Void) {
         print(#function)
         
-        var request = URLRequest(url: EndPoints.createSession.url)
+        var request = URLRequest(url: EndPoint.createSession.url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         guard let accessToken = accessToken else {
@@ -142,7 +137,7 @@ class AuthManager {
     
     func login(username: String, password: String, completion: @escaping (Bool) -> Void) {
         print(#function)
-        var request = URLRequest(url: EndPoints.login.url)
+        var request = URLRequest(url: EndPoint.login.url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -169,29 +164,6 @@ class AuthManager {
             } catch {
                 print("Error parsing Login response: \(error.localizedDescription)")
                 completion(false)
-            }
-        }
-        task.resume()
-    }
-    
-    
-    func getFavoritesMovies(completion: @escaping ([Movie]?) -> Void) {
-        print(#function)
-        
-        let task = URLSession.shared.dataTask(with: EndPoints.getFavorites.url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error requesting Favorites: \(error?.localizedDescription ?? "")")
-                completion(nil)
-                return
-            }
-            
-            do {
-                let response = try JSONDecoder().decode(MovieResults.self, from: data)
-                let movies = response.results
-                completion(movies)
-            } catch {
-                print("Error parsing Favorite Movies response: \(error.localizedDescription)")
-                completion(nil)
             }
         }
         task.resume()

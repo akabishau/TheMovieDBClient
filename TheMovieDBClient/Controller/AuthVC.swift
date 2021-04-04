@@ -48,7 +48,7 @@ class AuthVC: UIViewController {
                                     self.present(appTabBarVC, animated: true, completion: nil)
                                 }
                                 
-                                AuthManager.shared.getFavoritesMovies { favorites in
+                                NetworkManager.shared.getFavoritesMovies { favorites in
                                     guard let favorites = favorites else {
                                         print("User has no favorites")
                                         return
@@ -74,7 +74,7 @@ class AuthVC: UIViewController {
                 print("Token: \(AuthManager.shared.accessToken!)")
                 DispatchQueue.main.async {
                     print("going to call open function")
-                    UIApplication.shared.open(AuthManager.EndPoints.webAuth.url, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(AuthManager.EndPoint.webAuth.url, options: [:], completionHandler: nil)
                 }
             } else {
                 print("WelcomeVC: Error Trying to get Token")
