@@ -47,16 +47,6 @@ class AuthVC: UIViewController {
                                     appTabBarVC.modalPresentationStyle = .fullScreen
                                     self.present(appTabBarVC, animated: true, completion: nil)
                                 }
-                                
-                                NetworkManager.shared.getFavoritesMovies { favorites in
-                                    guard let favorites = favorites else {
-                                        print("User has no favorites")
-                                        return
-                                    }
-                                    for movie in favorites {
-                                        print(movie.title)
-                                    }
-                                }
                             }
                         }
                     }

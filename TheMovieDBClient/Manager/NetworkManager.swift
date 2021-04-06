@@ -35,25 +35,35 @@ class NetworkManager {
     }
     
     
-    func getFavoritesMovies(completion: @escaping ([Movie]?) -> Void) {
+    func getFavoriteMovies(completion: @escaping (Result<[Movie], TMDBError>) -> Void) {
         print(#function)
         
-        let task = URLSession.shared.dataTask(with: EndPoint.getFavoriteMovies.url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error requesting Favorites: \(error?.localizedDescription ?? "")")
-                completion(nil)
+        let task = URLSession.shared.dataTask(with: EndPoint.getFavoriteMovies.url) { (data, response, error) in
+            
+            if let _ = error {
+                completion(.failure(.unableToComplete))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(.failure(.invalidResponse))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.invalidData))
                 return
             }
             
             do {
-                let response = try JSONDecoder().decode(MovieResults.self, from: data)
-                let movies = response.results
-                completion(movies)
+                let moviesResults = try JSONDecoder().decode(MovieResults.self, from: data)
+                let movies = moviesResults.results
+                completion(.success(movies))
             } catch {
-                print("Error parsing Favorite Movies response: \(error.localizedDescription)")
-                completion(nil)
+                completion(.failure(.invalidData))
             }
         }
         task.resume()
+        
     }
 }

@@ -27,6 +27,7 @@
 		5B96C1FC261023CA0093A266 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1FB261023CA0093A266 /* FavoritesListVC.swift */; };
 		5B96C1FF261023DD0093A266 /* WatchListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C1FE261023DD0093A266 /* WatchListVC.swift */; };
 		5B96C2042615159A0093A266 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C2032615159A0093A266 /* NetworkManager.swift */; };
+		5B96C208261BE37F0093A266 /* TMDBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B96C207261BE37F0093A266 /* TMDBError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5B96C1FB261023CA0093A266 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
 		5B96C1FE261023DD0093A266 /* WatchListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListVC.swift; sourceTree = "<group>"; };
 		5B96C2032615159A0093A266 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5B96C207261BE37F0093A266 /* TMDBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		5B33169225F6CCAF007EEA89 /* TheMovieDBClient */ = {
 			isa = PBXGroup;
 			children = (
+				5B96C206261BE3620093A266 /* Utilities */,
 				5B3316B425F9C612007EEA89 /* Manager */,
 				5B3316B025F9B829007EEA89 /* Model */,
 				5B3316AB25F9B4AE007EEA89 /* Controller */,
@@ -155,6 +158,14 @@
 				5B96C1FE261023DD0093A266 /* WatchListVC.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		5B96C206261BE3620093A266 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5B96C207261BE37F0093A266 /* TMDBError.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +241,7 @@
 				5B96C1F6261023420093A266 /* TabBarVC.swift in Sources */,
 				5B33169825F6CCAF007EEA89 /* AuthVC.swift in Sources */,
 				5B96C1E325FE8FF60093A266 /* MDBTextField.swift in Sources */,
+				5B96C208261BE37F0093A266 /* TMDBError.swift in Sources */,
 				5B3316B625F9C623007EEA89 /* AuthManager.swift in Sources */,
 				5B96C1E9260528350093A266 /* LoginRequest.swift in Sources */,
 				5B96C1DD25FE8D250093A266 /* SessionRequest.swift in Sources */,
